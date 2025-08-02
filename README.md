@@ -15,6 +15,7 @@
 
 - React
 - React Hooks (useState, useContext, useEffect)
+- Custom Hook
 - CSS Modules
 - Dummy backend
 

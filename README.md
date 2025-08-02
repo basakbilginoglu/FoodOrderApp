@@ -15,8 +15,8 @@
 
 - React
 - React Hooks (useState, useContext, useEffect)
-- CSS Modules (or your styling method of choice)
-- Dummy backend (e.g., JSON Server or custom implementation)
+- CSS Modules
+- Dummy backend
 
 ## 🖼️ App Workflow
 

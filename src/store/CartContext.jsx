@@ -8,54 +8,52 @@ const CartContext=createContext(
     }
 );
 
-function cartReducer(state,action){
-    if(action.type==='ADD_ITEM'){
-       const existingItemIndex=state.items.findIndex(item=>item.id===action.item.id)
-       
-       const updatedItems = [...state.items];
-       if (existingItemIndex>-1){
-        const existingItem=state.items[existingItemIndex];
-     const updatedItem={
-       ...existingItem,
-        quantity:existingItem.quantity + 1
-     };
-      updatedItems[existingItemIndex]=updatedItem;
-     }        
-       }else{
-        updatedItems.push({...action.item,quantity:1});
-       }
-       return {
-        items:updatedItems
+function cartReducer(state, action) {
+  if (action.type === 'ADD_ITEM') {
+    const existingItemIndex = state.items.findIndex(
+      item => item.id === action.item.id
+    );
 
-        }
-             
+    const updatedItems = [...state.items];
+
+    if (existingItemIndex > -1) {
+      const existingItem = state.items[existingItemIndex];
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + 1
+      };
+      updatedItems[existingItemIndex] = updatedItem;
+    } else {
+      updatedItems.push({ ...action.item, quantity: 1 });
     }
 
-    if(action.type==='REMOVE_ITEM'){
+    return { items: updatedItems };
+  }
 
-    }   
-    return state;
-}   
+  if (action.type === 'REMOVE_ITEM') {
+    const updatedItems = state.items.filter(
+      item => item.id !== action.id
+    );
+    return { items: updatedItems };
+  }
 
-<<<<<<< Updated upstream
-export function CartContextProvider({children}){
-    useReducer(cartReducer,{
-        items:[]
-=======
+  return state;
 }
-{
-    return state;
-}
-
 
 
 export function CartContextProvider({ children }) {
-    useReducer(cartReducer, {
-        items: []
->>>>>>> Stashed changes
-    });
-    return <CartContext.Provider>{children}</CartContext.Provider>
+useReducer(cartReducer, {
+    items: []
+  });
 
+ 
+
+  return (
+    <CartContext.Provider value={cartContext}>
+      {children}
+    </CartContext.Provider>
+  );
 }
+
 
 export default CartContext;

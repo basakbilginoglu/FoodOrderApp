@@ -37,9 +37,22 @@ function cartReducer(state,action){
     return state;
 }   
 
+<<<<<<< Updated upstream
 export function CartContextProvider({children}){
     useReducer(cartReducer,{
         items:[]
+=======
+}
+{
+    return state;
+}
+
+
+
+export function CartContextProvider({ children }) {
+    useReducer(cartReducer, {
+        items: []
+>>>>>>> Stashed changes
     });
     return <CartContext.Provider>{children}</CartContext.Provider>
 

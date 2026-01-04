@@ -5,6 +5,7 @@ import CartContext from '../store/CartContext'
 import { currencyFormatter } from '../util/formatting.js'
 import Button from './UI/Button'
 import UserProgressContext from '../store/UserProgressContext'
+import CartItem from './CartItem.jsx'
 
 
 
@@ -32,7 +33,11 @@ export default function Cart() {
             <ul>
                 {cartCtx.items.map((item) =>
 
-                    <li key={item.id}>{item.name} - ${item.price}</li>
+                   <CartItem key={item.id}
+                    {...item}
+                    onIncrease={()=>cartCtx.addItem({...item, quantity:1})}
+                    onDecrease={()=>cartCtx.removeItem(item.id)}
+                   />
                 )}
             </ul>
 

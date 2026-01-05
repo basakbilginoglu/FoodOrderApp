@@ -16,9 +16,15 @@ export default function Checkout() {
   function handleCloseCheckout(){
     userProgressContext.hideCheckout();
   }
+
+  function handleSubmit(event){
+    event.preventDefault();
+    const fd = new FormData(event.target);
+    const customerData= Object.fromEntries(fd.entries());
+  }
   return (
     <Modal open={ userProgressContext.progress === 'checkout'}>
-        <form>
+        <form onSubmit={handleSubmit} >
             <h2>Checkout</h2>
             <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
 

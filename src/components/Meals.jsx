@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MealsItem from "./MealItem";
 import useHttp from "../hooks/useHttp.jsx";
+import Error from "./Error.jsx";
 
 export default function Meals() {
 
@@ -11,7 +12,7 @@ export default function Meals() {
     return <p className="center">Loading meals...</p>
   }
   if(error) {
-    return <p className="center">{error}</p>
+    return <Error title="An error occurred!" message={error} />
   }
 
   return (

@@ -11,35 +11,50 @@ async function sendHttpRequest(url, config) {
   return resData;
 }
 
-export default function useHttp(url, config = {}, initialData = null) {
+export default function useHttp(url, config, initialData = null) {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
+  function clearData() {
+    setData(initialData);
+  }
 
-    try {
-      const resData = await sendHttpRequest(url, config);
-      setData(resData);
-    } catch (err) {
-      setError(err.message || 'Something went wrong!');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [url, config]);
+  const sendRequest = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const resData = await sendHttpRequest(url, {
+          ...config,
+          body: data,
+        });
+        setData(resData);
+      } catch (err) {
+        setError(err.message || 'Something went wrong!');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [url, config]
+  );
 
   useEffect(() => {
-    if (url) {
+    // Only auto-send for GET requests (or when method is not specified/null)
+    if (
+      (config?.method === 'GET' || !config?.method) &&
+      url
+    ) {
       sendRequest();
     }
-  }, [sendRequest]);
+  }, [sendRequest, config?.method, url]);
 
   return {
     data,
     isLoading,
     error,
-    sendRequest
+    sendRequest,
+    clearData,
   };
 }
